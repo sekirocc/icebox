@@ -1,0 +1,54 @@
+#!/bin/bash
+# chkconfig: 2345 50 50
+# description: icebox, start main service of icebox when reboot
+
+# Source function library.
+. /etc/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+prog=icebox
+lockfile=/var/lock/subsys/$prog
+
+start() {
+        # Start daemons.
+        echo -n $"Starting $prog: "
+        sed '/^ *$/d' /etc/icebox/icebox.conf | sed 's/^/export &/g' > .tmp
+        source .tmp; rm -f .tmp
+        icebox-public &
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && touch $lockfile
+        return $RETVAL
+}
+
+stop() {
+        [ "$EUID" != "0" ] && exit 4
+        echo -n $"Shutting down $prog: "
+        killproc $prog
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && rm -f $lockfile
+        return $RETVAL
+}
+
+# See how we were called.
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status $prog
+        ;;
+  restart|force-reload)
+        stop
+        start
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|status|restart}"
+        exit 2
+esac

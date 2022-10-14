@@ -1,0 +1,1 @@
+-e git+http://github.com/sekirocc/densefog.git#egg=densefog

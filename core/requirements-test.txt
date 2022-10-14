@@ -1,0 +1,4 @@
+tox
+flake8
+mock
+pbr>=1.8

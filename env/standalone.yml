@@ -1,0 +1,37 @@
+public:
+  build: ./core
+  command: /icebox/core/run.sh icebox-ecs-public
+  env_file: .env
+  extra_hosts:
+      - "m-13-126-test02-yz.bj-cn.vps.azure.com:192.168.31.20"
+  volumes:
+    - "./:/icebox"
+  ports:
+    - "0.0.0.0:${PUBLIC_PORT}:${PUBLIC_PORT}"
+manage:
+  build: ./core
+  command: /icebox/core/run.sh icebox-ecs-manage
+  env_file: .env
+  extra_hosts:
+      - "m-13-126-test02-yz.bj-cn.vps.azure.com:192.168.31.20"
+  volumes:
+    - "./:/icebox"
+  ports:
+    - "0.0.0.0:${MANAGE_PORT}:${MANAGE_PORT}"
+worker:
+  build: ./core
+  command: /icebox/core/run.sh icebox-ecs-worker
+  env_file: .env
+  extra_hosts:
+      - "m-13-126-test02-yz.bj-cn.vps.azure.com:192.168.31.20"
+  volumes:
+    - "./:/icebox"
+db:
+  image: mysql:5.6.28
+  volumes:
+    - "./env/tmp/db:/var/lib/mysql"
+  environment:
+    MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    MYSQL_DATABASE: ${DB_DATABASE}
+  ports:
+    - "${NODE_IP}:${DB_PORT}:3306"

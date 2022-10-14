@@ -1,0 +1,8 @@
+#!/bin/bash
+# description: icebox-shell
+
+set -o allexport
+source /etc/icebox/icebox.conf
+set +o allexport
+
+/usr/bin/.icebox-shell

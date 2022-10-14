@@ -1,0 +1,13 @@
+env/tmp
+
+.env
+env.local
+docker-compose.yml
+
+*.swo
+*.swp
+*.log
+core/logs
+core/src
+
+.DS_Store

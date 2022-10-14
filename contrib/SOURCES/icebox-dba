@@ -1,0 +1,31 @@
+#!/bin/bash
+# description: icebox-dba
+
+set -o allexport
+source /etc/icebox/icebox.conf
+set +o allexport
+
+# See how we were called.
+case "$1" in
+  migrate)
+        /usr/bin/.icebox-dba migrate
+        ;;
+  revision)
+        if [ $# == 2 ]
+        then
+            /usr/bin/.icebox-dba revision $2
+        else
+            echo "Missing one parameter"
+            exit 1
+        fi
+        ;;
+  downgrade)
+        /usr/bin/.icebox-dba downgrade
+        ;;
+  backup)
+        /usr/bin/.icebox-dba backup
+        ;;
+  *)
+        echo $"Usage: $0 {migrate|revision|downgrade|backup}"
+        exit 2
+esac

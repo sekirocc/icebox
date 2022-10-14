@@ -1,0 +1,13 @@
+[Unit]
+Description=icebox
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/etc/init.d/icebox-manage start
+ExecReload=/etc/init.d/icebox-manage restart
+ExecStop=/etc/init.d/icebox-manage stop
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

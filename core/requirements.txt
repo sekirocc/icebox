@@ -1,0 +1,13 @@
+gevent
+Flask
+SQLAlchemy
+alembic
+redis
+jsonschema
+PyMySQL
+warlock
+python-glanceclient
+python-keystoneclient
+python-neutronclient
+python-novaclient
+python-ceilometerclient
